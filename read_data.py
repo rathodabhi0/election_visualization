@@ -19,10 +19,11 @@ class statewide_analysis:
     def __init__(self, df1):
         self.df1=df1
 
-    def seats(self):
+    def state_party(self):
         return df1.groupby(['STATE','PARTY']).sum()
 
-
+    def state_constituency(self):
+        return df1.groupby(['STATE','CONSTITUENCY']).sum()
 
 
 if __name__ == "__main__":
@@ -30,6 +31,7 @@ if __name__ == "__main__":
     place_holder_for_df = reading_data(abhi)
     df1 = place_holder_for_df.import_file()
     new_method = statewide_analysis(df1)
-    print(new_method.seats())
+    print(new_method.state_party())
+    print(new_method.state_constituency())
 
 
