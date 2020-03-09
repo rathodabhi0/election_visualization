@@ -25,13 +25,25 @@ class statewide_analysis:
     def state_constituency(self):
         return df1.groupby(['STATE','CONSTITUENCY']).sum()
 
+    def gender(self):
+        return df1.groupby(['STATE', 'GENDER']).sum()
+
+class partywide_analysis:
+    def __init__(self, df1):
+        self.df1=df1
+
+    def party_vote(self):
+        return df1.groupby(['PARTY']).sum()
 
 if __name__ == "__main__":
     abhi= 'LS_20.csv'
     place_holder_for_df = reading_data(abhi)
     df1 = place_holder_for_df.import_file()
-    new_method = statewide_analysis(df1)
-    print(new_method.state_party())
-    print(new_method.state_constituency())
+    statewide_analysis_method = statewide_analysis(df1)
+    partywide_analysis_method= partywide_analysis(df1)
+    print(statewide_analysis_method.state_party())
+    print(statewide_analysis_method.state_constituency())
+    print(statewide_analysis_method.gender())
+    print(partywide_analysis_method.party_vote())
 
 
