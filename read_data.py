@@ -1,6 +1,9 @@
 import os
 import pandas as pd
 import numpy as np
+# import dash
+# import dash_core_components as dcc
+# import dash_html_components as html
 
 class reading_data:
 
@@ -11,16 +14,22 @@ class reading_data:
         df = pd.read_csv(self.file_name)
         return df
 
-
+##analysis of every state: Grouped by [(State,party), (State,Constituency)]
 class statewide_analysis:
+    def __init__(self, df1):
+        self.df1=df1
 
     def seats(self):
-        place_holder_for_df = reading_data('LS_20.csv')
-        df1 = place_holder_for_df.import_file()
-        print(df1.groupby(['STATE','PARTY']).sum())
+        return df1.groupby(['STATE','PARTY']).sum()
+
+
+
 
 if __name__ == "__main__":
+    abhi= 'LS_20.csv'
+    place_holder_for_df = reading_data(abhi)
+    df1 = place_holder_for_df.import_file()
+    new_method = statewide_analysis(df1)
+    print(new_method.seats())
 
-    p = statewide_analysis()
-    p.seats()
 
