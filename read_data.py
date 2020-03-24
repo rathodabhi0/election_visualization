@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+import redis
 # import dash
 # import dash_core_components as dcc
 # import dash_html_components as html
@@ -19,14 +20,16 @@ class statewide_analysis:
     def __init__(self, df1):
         self.df1=df1
 
-    def state_party(self):
-        return df1.groupby(['STATE','PARTY']).sum()
+    def state_wise_party_vote_share(self):
+        df2 = df1[['STATE','PARTY','TOTAL VOTES', 'TOTAL ELECTORS']]
+        df2['Vote share']= ((df2['TOTAL VOTES']/df2['TOTAL ELECTORS'])*100)
+        return df2[['STATE', 'PARTY', 'Vote share']].groupby(['STATE', 'PARTY']).sum()
 
     def state_constituency(self):
-        return df1.groupby(['STATE','CONSTITUENCY']).sum()
+        return df1.groupby(['STATE','CONSTITUENCY', 'TOTAL ELECTORS']).sum()
 
     def gender(self):
-        return df1.groupby(['STATE', 'GENDER']).sum()
+        return df1.groupby(['STATE', 'GENDER', 'TOTAL ELECTORS']).sum()
 
 class partywide_analysis:
     def __init__(self, df1):
@@ -41,9 +44,7 @@ if __name__ == "__main__":
     df1 = place_holder_for_df.import_file()
     statewide_analysis_method = statewide_analysis(df1)
     partywide_analysis_method= partywide_analysis(df1)
-    print(statewide_analysis_method.state_party())
+    print(statewide_analysis_method.state_wise_party_vote_share())
     print(statewide_analysis_method.state_constituency())
     print(statewide_analysis_method.gender())
     print(partywide_analysis_method.party_vote())
-
-
