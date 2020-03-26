@@ -36,6 +36,11 @@ class statewide_analysis:
         return df4[['STATE', 'GENDER', 'WINNER']]
 
 #        df3.to_csv('export.csv', index=False)
+    def Total_constituencies(self):
+        df2 = df1[['STATE', 'CONSTITUENCY']]
+        return_value = df2.groupby(['STATE']).nunique()
+        return_value_1 = return_value.rename_axis('STATE NAME').reset_index()
+        return return_value_1[['STATE NAME', 'CONSTITUENCY']]
 
 class partywide_analysis:
     def __init__(self, df1):
@@ -83,3 +88,4 @@ if __name__ == "__main__":
     print(partywide_analysis_method.party_vote())
     print(partywide_analysis_method.total_candidates_by_party())
     print(candidate_analysis_method.criminal_case_candidate())
+    print(statewide_analysis_method.Total_constituencies())
